@@ -1,0 +1,15 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<style media="screen">
+
+
+</style>
+<form class="card-panel" method="post" novalidate>
+  <h4 class="black-text lighten-2">POST</h4>
+  {% csrf_token %}
+  {{form.as_p}}
+  <input type="submit" class="btn" value="Post">
+  <a href="{% url 'profile' %}" class="btn pink lighten-pink-2">Back to Post List</a>
+</form>
+{% endblock %}

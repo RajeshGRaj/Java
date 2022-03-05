@@ -1,0 +1,11 @@
+{% extends 'index.html' %}
+{% block content %}
+<form class="card-panel" method="post">
+  <h2 class="teal-text">Register</h2>
+  {% csrf_token %}
+  {{form.as_p}}
+  <input type="submit" name="" class="btn" value="Sign Up">
+  <a href="{% url 'sign_in' %}" class="btn pink">Login</a>
+</form>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'index.html' %}
+{% block content %}
+<div class="row">
+
+  <div class="col s12">
+    <form class="card-panel row" method="post">
+      <h2 class="teal-text col s12">Login</h2>
+      {% csrf_token %}
+      {{form.as_p}}
+      <input type="submit" class=" btn" value="Login">
+
+      <a href="{% url 'sign_up' %}" class="btn pink lighten-pink-2">Register</a>
+    </form>
+  </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="row">
+  {% for posts in post_data %}
+  <div class="card darken-1 hoverable">
+        <div class="card-content black-text">
+          <span class="card-title">{{posts.title}}</span>
+          <p>{{posts.body|linebreaks}}</p>
+        </div>
+        <div class="card-action">
+          <form class="" method="post" style="display:flex;">
+            {% csrf_token %}
+            {% if request.user in posts.liked.all %}
+            <a class="like {{posts.id}}" data-value="{{posts.id}}"><i class="material-icons pink-text" style="font-size:30px;">favorite</i></a>
+            {% else %}
+            <a class="like {{posts.id}}" data-value="{{posts.id}}"><i class="material-icons pink-text" style="font-size:30px;">favorite_border</i></a>
+            {% endif %}
+            <a class="count badge pink-text" style="font-size:20px;" id="{{posts.id}}">{{posts.liked.all.count}}</a>
+          </form>
+        </div>
+  </div>
+  {%  endfor %}
+
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+$(document).ready(function(){
+
+$('.like').click(function(e)
+{
+  var csrf = $("input[name=csrfmiddlewaretoken]").val();
+  var post_id = $(this).data('value');
+  $.ajax({
+    method:"post",
+    url:'/like/'+post_id,
+    data:{'carf':csrf, "post_id":post_id},
+    success:function(response)
+    {
+      var count = $("#"+post_id+"").text(response.postcount);
+      if(response.like)
+      {
+        $("."+post_id+" i").text("favorite");
+        count
+      }
+      else{
+        $("."+post_id+" i").text("favorite_border");
+        count
+      }
+    },
+    error:function(response)
+    {
+      console.log(response);
+    }
+  });
+});
+});
+</script>
+{% endblock %}
